@@ -15,7 +15,8 @@ export class AppComponent {
 
   options: any = {
     lineWrapping: true,
-    toolbar: true
+    toolbar: ["bold", "italic", "heading", "|", "quote", "|", "preview"],
+    showIcons: ["code", "table"]
   };
   title = 'doc-notes';
 
