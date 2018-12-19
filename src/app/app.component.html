@@ -1,13 +1,39 @@
-<!--The content below is only a placeholder and can be replaced.-->
-<mat-card>
-  <mat-card-content>
-    <td-text-editor [value]="text" [options]="options" #textEditor></td-text-editor>
-  </mat-card-content>
-  <mat-card-actions>
-    <button mat-button>OK</button>
-    <button mat-raised-button color="primary"  class="text-upper">Toggle Complete</button>
-    <button mat-button class="text-upper">Cancel</button>
-  </mat-card-actions>
-</mat-card>
+
+
+<td-steps>
+  <td-step #stepPatient [label]="patient" sublabel="Composition.subject - Who and/or what the composition is about" [active]="true" [disabled]="disabled">
+
+    <td-search-input placeholder="Search here" [(ngModel)]="searchPatientTerm" [showUnderline]="true" [debounce]="500" (searchDebounce)="onPatientSearch($event)" (search)="onPatientSearch($event)" (clear)="searchPatientTerm = ''">
+    </td-search-input>
+    <mat-list>
+      <mat-list-item *ngFor="let item of patients" (click)="onPatientSelect(item)"> {{item.name}} </mat-list-item>
+    </mat-list>
+  </td-step>
+  <td-step #stepPractitioner [label]="practitioner" sublabel="Composition.author - Who and/or what authored the composition" [active]="false" [disabled]="disabled">
+
+    <td-search-input placeholder="Search here" [(ngModel)]="searchPractitionerTerm" [showUnderline]="true" [debounce]="500" (searchDebounce)="onPractitionerSearch($event)" (search)="onPractitionerSearch($event)" (clear)="searchPractitionerTerm = ''">
+    </td-search-input>
+    <mat-list>
+      <mat-list-item *ngFor="let item of practitioners" (click)="onPractitionerSelect(item)"> {{item.name}} </mat-list-item>
+    </mat-list>
+  </td-step>
+  <td-step #stepSection1 label="Section One" sublabel="Toggle between active and inactive and emit events." [disabled]="disabled" (activated)="activeStep1Event()" (deactivated)="deactiveStep1Event()">
+    <td-text-editor style="height: 200px" [value]="sectionOne" [options]="options" #textEditorOne></td-text-editor>
+  </td-step>
+  <td-step #stepSection2 label="Section Two" sublabel="Toggle between active and inactive while in required state and disable ripple." [state]="stateSectionTwo" [disabled]="disabled" disableRipple>
+    <td-text-editor [value]="sectionTwo" [options]="options" #textEditorTwo></td-text-editor>
+  </td-step>
+  <td-step #stepFinish label="Finish and Submit Note" sublabel="Toggle between active and inactive while in complete state." [state]="stateStep3" [disabled]="disabled">
+    Mark this step complete and get a summary
+    <ng-template td-step-summary>
+      Use an optional step summary to summarize the info in this step
+    </ng-template>
+    <ng-template td-step-actions>
+      <button mat-raised-button color="primary" (click)="toggleCompleteStep3()" class="text-upper">Toggle Complete</button>
+      <button mat-button (click)="step3.active = false" class="text-upper">Cancel</button>
+    </ng-template>
+  </td-step>
+</td-steps>
+
 
 <router-outlet></router-outlet>
