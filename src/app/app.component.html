@@ -1,28 +1,44 @@
 
 
 <td-steps>
-  <td-step #stepPatient [label]="patient" sublabel="Composition.subject - Who and/or what the composition is about" [active]="true" [disabled]="disabled">
 
-    <td-search-input placeholder="Search here" [(ngModel)]="searchPatientTerm" [showUnderline]="true" [debounce]="500" (searchDebounce)="onPatientSearch($event)" (search)="onPatientSearch($event)" (clear)="searchPatientTerm = ''">
+  <td-step #stepPatient [label]="patient" sublabel="Composition.subject - Who and/or what the composition is about" [active]="true" [disabled]="disabled">
+    <td-search-input placeholder="Search patient name" [(ngModel)]="searchPatientTerm" [showUnderline]="true" [debounce]="500" (searchDebounce)="onPatientSearch($event)" (search)="onPatientSearch($event)" (clear)="searchPatientTerm = ''">
     </td-search-input>
     <mat-list>
       <mat-list-item *ngFor="let item of patients" (click)="onPatientSelect(item)"> {{item.name}} </mat-list-item>
     </mat-list>
   </td-step>
-  <td-step #stepPractitioner [label]="practitioner" sublabel="Composition.author - Who and/or what authored the composition" [active]="false" [disabled]="disabled">
 
-    <td-search-input placeholder="Search here" [(ngModel)]="searchPractitionerTerm" [showUnderline]="true" [debounce]="500" (searchDebounce)="onPractitionerSearch($event)" (search)="onPractitionerSearch($event)" (clear)="searchPractitionerTerm = ''">
+  <td-step #stepPractitioner [label]="practitioner" sublabel="Composition.author - Who and/or what authored the composition" [active]="false" [disabled]="disabled">
+    <td-search-input placeholder="Search practitioner name" [(ngModel)]="searchPractitionerTerm" [showUnderline]="true" [debounce]="500" (searchDebounce)="onPractitionerSearch($event)" (search)="onPractitionerSearch($event)" (clear)="searchPractitionerTerm = ''">
     </td-search-input>
     <mat-list>
       <mat-list-item *ngFor="let item of practitioners" (click)="onPractitionerSelect(item)"> {{item.name}} </mat-list-item>
     </mat-list>
   </td-step>
+
+  <td-step #stepOrganisation [label]="organisation" sublabel="Composition.custodian - Organization which maintains the composition" [active]="false" [disabled]="disabled">
+    <td-search-input placeholder="Search organisation name" [(ngModel)]="searchOrganisationTerm" [showUnderline]="true" [debounce]="500" (searchDebounce)="onOrganisationSearch($event)" (search)="onOrganisationSearch($event)" (clear)="searchOrganisationTerm = ''">
+    </td-search-input>
+    <mat-list>
+      <mat-list-item *ngFor="let item of organisations" (click)="onOrganisationSelect(item)"> {{item.name}} </mat-list-item>
+    </mat-list>
+  </td-step>
+
+  <td-step #stepDate [label]="date" sublabel="Composition.date - Composition editing time" [active]="false" [disabled]="disabled">
+    <input [matDatepicker]="myDatepicker">
+    <mat-datepicker #myDatepicker></mat-datepicker>
+  </td-step>
+
   <td-step #stepSection1 label="Section One" sublabel="Toggle between active and inactive and emit events." [disabled]="disabled" (activated)="activeStep1Event()" (deactivated)="deactiveStep1Event()">
     <td-text-editor style="height: 200px" [value]="sectionOne" [options]="options" #textEditorOne></td-text-editor>
   </td-step>
+
   <td-step #stepSection2 label="Section Two" sublabel="Toggle between active and inactive while in required state and disable ripple." [state]="stateSectionTwo" [disabled]="disabled" disableRipple>
     <td-text-editor [value]="sectionTwo" [options]="options" #textEditorTwo></td-text-editor>
   </td-step>
+
   <td-step #stepFinish label="Finish and Submit Note" sublabel="Toggle between active and inactive while in complete state." [state]="stateStep3" [disabled]="disabled">
     Mark this step complete and get a summary
     <ng-template td-step-summary>
@@ -33,6 +49,7 @@
       <button mat-button (click)="step3.active = false" class="text-upper">Cancel</button>
     </ng-template>
   </td-step>
+
 </td-steps>
 
 

@@ -10,12 +10,14 @@ import {CovalentHighlightModule} from '@covalent/highlight';
 import {CovalentDynamicFormsModule} from '@covalent/dynamic-forms';
 import {CovalentTextEditorModule} from '@covalent/text-editor';
 import {
+  DateAdapter, MAT_DATE_FORMATS, MAT_DATE_LOCALE,
   MatButtonModule,
-  MatCardModule,
+  MatCardModule, MatDatepickerModule,
   MatFormFieldModule,
   MatGridListModule,
   MatIconModule, MatListModule, MatMenuModule, MatSelectModule
 } from '@angular/material';
+import {MAT_MOMENT_DATE_FORMATS, MatMomentDateModule, MomentDateAdapter} from '@angular/material-moment-adapter';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {FormsModule} from '@angular/forms';
 import {CcriFhirServiceService} from './ccri-fhir-service.service';
@@ -38,6 +40,7 @@ import {CcriFhirServiceService} from './ccri-fhir-service.service';
     MatMenuModule,
     MatSelectModule,
     MatListModule,
+    MatDatepickerModule,
 
     CovalentLayoutModule,
     CovalentStepsModule,
@@ -50,7 +53,9 @@ import {CcriFhirServiceService} from './ccri-fhir-service.service';
     CovalentSearchModule
   ],
   providers: [
-    CcriFhirServiceService
+    CcriFhirServiceService,
+    {provide: DateAdapter, useClass: MomentDateAdapter, deps: [MAT_DATE_LOCALE]},
+    {provide: MAT_DATE_FORMATS, useValue: MAT_MOMENT_DATE_FORMATS}
   ],
   bootstrap: [AppComponent]
 })

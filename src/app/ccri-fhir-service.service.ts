@@ -28,4 +28,10 @@ export class CcriFhirServiceService {
     console.log(queryParams);
     return; }
 
+  @TdGET({
+    path: '/Organization',
+  })
+  getOrganisationSearchResponse(@TdQueryParams() queryParams?: HttpParams): Observable<HttpResponse<any>> {
+    console.log(queryParams);
+    return; }
 }
